@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  postgres-compose:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: "Postgres2019!"
+    ports:
+      - "15432:5432"
+    volumes:
+      - /Users/rafaelfreitas/Sites/dockers/PostgreSQL/DataBase:/var/lib/postgresql/data 
+    networks:
+      - local-services-network
+      
+  pgadmin-compose:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "developer@rafael.freitas.dev"
+      PGADMIN_DEFAULT_PASSWORD: "PgAdmin2019!"
+    ports:
+      - "16543:80"
+    depends_on:
+      - postgres-compose
+    networks:
+      - local-services-network
+
+networks: 
+  local-services-network:
+    driver: bridge
