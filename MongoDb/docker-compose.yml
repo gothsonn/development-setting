@@ -5,6 +5,8 @@ services:
     image: mongo-express
     ports:
       - 8081:8081
+    depends_on:
+      - mongo
     environment:
       ME_CONFIG_BASICAUTH_USERNAME: rafaelfreitas
       ME_CONFIG_BASICAUTH_PASSWORD: MongoExpress2019!

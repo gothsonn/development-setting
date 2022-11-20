@@ -35,6 +35,20 @@ services:
     environment:
       KAFKA_BROKERCONNECT: kafka:29092
 
+  kafka-ui:
+    image: provectuslabs/kafka-ui
+    networks: 
+      - local-services-network
+    container_name: kafka-ui
+    ports:
+      - "18080:8080"
+    depends_on:
+      - kafka
+    restart: always
+    environment:
+      - KAFKA_CLUSTERS_0_NAME=local
+      - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=kafka:29092
+
 networks: 
   local-services-network:
     driver: bridge  
