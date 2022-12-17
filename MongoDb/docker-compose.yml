@@ -7,7 +7,9 @@ services:
       - 8081:8081
     depends_on:
       - mongo
+    restart: always
     environment:
+      ME_CONFIG_MONGODB_SERVER: mongo
       ME_CONFIG_BASICAUTH_USERNAME: rafaelfreitas
       ME_CONFIG_BASICAUTH_PASSWORD: MongoExpress2019!
       ME_CONFIG_MONGODB_PORT: 27017
