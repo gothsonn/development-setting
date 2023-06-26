@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 
 services:
   mongo-express:
@@ -28,10 +28,10 @@ services:
     ports:
       - "27017:27017"
     volumes:
-      - /Users/rafaelfreitas/Sites/dockers/MongoDb/DataBase:/data/db
+      - ./DataBase:/data/db
     networks:
       - local-services-network
 
-networks: 
-    local-services-network:
-      driver: bridge
+networks:
+  local-services-network:
+    driver: bridge

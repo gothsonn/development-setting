@@ -1,17 +1,18 @@
-version: '3'
+version: "3"
 
 services:
   postgres-compose:
     image: postgres
     environment:
+      POSTGRES_USER: "admin"
       POSTGRES_PASSWORD: "Postgres2019!"
     ports:
       - "15432:5432"
     volumes:
-      - /Users/rafaelfreitas/Sites/dockers/PostgreSQL/DataBase:/var/lib/postgresql/data 
+      - ./DataBase:/var/lib/postgresql/data
     networks:
       - local-services-network
-      
+
   pgadmin-compose:
     image: dpage/pgadmin4
     environment:
@@ -24,6 +25,6 @@ services:
     networks:
       - local-services-network
 
-networks: 
+networks:
   local-services-network:
     driver: bridge

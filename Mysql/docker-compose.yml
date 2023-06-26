@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 
 services:
   mysqlsrv:
@@ -6,12 +6,12 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: "MySql2019!"
       MYSQL_DATABASE: "testedb"
-    command: --default-authentication-plugin=mysql_native_password
+    command: mysqld --sql_mode="" --default-authentication-plugin=mysql_native_password
     restart: always
     ports:
       - "3306:3306"
     volumes:
-      - /Users/rafaelfreitas/Sites/dockers/Mysql/DataBase:/var/lib/mysql
+      - ./DataBase:/var/lib/mysql
     networks:
       - local-services-network
 
@@ -22,6 +22,23 @@ services:
     networks:
       - local-services-network
 
-networks: 
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: pma
+    depends_on:
+      - mysqlsrv
+    links:
+      - mysqlsrv
+    environment:
+      PMA_HOST: mysqlsrv
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+    restart: always
+    ports:
+      - 8081:80
+    networks:
+      - local-services-network
+
+networks:
   local-services-network:
     driver: bridge
