@@ -1,38 +1,29 @@
-version: '3'
+version: "3"
 services:
   oracle-db:
-    # platform: linux/amd64
-    # image: container-registry.oracle.com/database/enterprise:latest
-    image: container-registry.oracle.com/database/express:21.3.0-xe
+    image: container-registry.oracle.com/database/enterprise:latest
     environment:
-      # - ORACLE_SID=ORCLCDB
-      # - ORACLE_PDB=ORCLPDB1
+      - ORACLE_SID=ORCLCDB
+      - ORACLE_PDB=ORCLPDB1
       - ORACLE_PWD=Oracle_123
-      # - ORACLE_BASE=/u01/app/oracle
-      # - ORACLE_HOME=/opt/oracle/product/21c/dbhome_1
-      # - ORACLE_HOME=/home/oracle
-      # - PATH=/home/oracle/bin:/opt/oracle/product/21c/dbhome_1/OPatch/:/usr/sbin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
     ports:
       - 1521:1521
     volumes:
       - oracle-data:/opt/oracle/oradata
       - oracle-backup:/opt/oracle/backup
     healthcheck:
-      test: ["CMD", "sqlplus", "-L", "sys/Oracle_123@//localhost:1521/XEPDB1 as sysdba", "@healthcheck.sql"]
+      test:
+        [
+          "CMD",
+          "sqlplus",
+          "-L",
+          "sys/Oracle_123@//localhost:1521/ORCLCDB as sysdba",
+          "@healthcheck.sql",
+        ]
       interval: 30s
       timeout: 10s
       retries: 5
 
 volumes:
   oracle-data:
-    # driver: local
-    # driver_opts:
-    #   type: 'none'
-    #   o: 'bind'
-    #   device: './DataBase'
   oracle-backup:
-    # driver: local
-    # driver_opts:
-    #   type: 'none'
-    #   o: 'bind'
-    #   device: './DataBase-bck'
