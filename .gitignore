@@ -23,3 +23,9 @@
 hs_err_pid*
 Mysql/DataBase/*
 PostgreSQL/DataBase/*
+MSSQL/DataBase/*
+MSSQL/Logs/*
+MongoDb/DataBase/*
+MSSQL/.DS_Store
+Oracle/.DS_Store
+Oracle/DataBase/.DS_Store
