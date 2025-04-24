@@ -1,4 +1,3 @@
-version: "3"
 services:
   oracle-db:
     image: container-registry.oracle.com/database/enterprise:latest

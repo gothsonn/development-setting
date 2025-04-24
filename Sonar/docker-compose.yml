@@ -1,4 +1,3 @@
-version: "3"
 services:
   SonarQube:
     image: sonarqube:community
