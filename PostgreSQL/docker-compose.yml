@@ -2,27 +2,27 @@ services:
   postgres-compose:
     image: postgres
     environment:
-      POSTGRES_USER: "admin"
-      POSTGRES_PASSWORD: "91lS!&*ke"
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
-      - "15432:5432"
+      - "${POSTGRES_PORT}:5432"
     volumes:
       - ./DataBase:/var/lib/postgresql/data
     networks:
-      - local-services-network
+      - ${NETWORK_NAME}
 
   pgadmin-compose:
     image: dpage/pgadmin4
     environment:
-      PGADMIN_DEFAULT_EMAIL: "developer@rafael.freitas.dev"
-      PGADMIN_DEFAULT_PASSWORD: "91lS!&*ke"
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD}
     ports:
-      - "16543:80"
+      - "${PGADMIN_PORT}:80"
     depends_on:
       - postgres-compose
     networks:
-      - local-services-network
+      - ${NETWORK_NAME}
 
 networks:
-  local-services-network:
+  ${NETWORK_NAME}:
     driver: bridge

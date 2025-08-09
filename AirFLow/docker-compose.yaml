@@ -1,0 +1,39 @@
+services:
+  airflow:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: airflow
+#    depends_on:
+#      - postgres-compose
+#      - mongo
+    environment:
+#      AIRFLOW__WEBSERVER__AUTH_BACKEND: airflow.auth.managers.fab.fab_auth_manager.AuthManager
+#      AIRFLOW__WEBSERVER__EXPOSE_CONFIG: "True"
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: ${AIRFLOW_DB_CONNECTION}
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__CORE__DAGS_FOLDER: /opt/airflow/dags
+      AIRFLOW__CORE__LOAD_EXAMPLES: "False"
+      PYTHONPATH: /app
+    volumes:
+      - ${WORKSPACE_PATH}/AirFlow/dags:/opt/airflow/dags
+      - ${WORKSPACE_PATH}/AirFlow/logs:/opt/airflow/logs
+      - ${WORKSPACE_PATH}/AirFlow/plugins:/opt/airflow/plugins
+      - ${WORKSPACE_PATH}/AirFlow/config:/opt/airflow/config
+      - ${GESTOR_PESSOAL_PATH}/:/app
+    ports:
+      - "${AIRFLOW_PORT}:8080"
+    command: >
+      bash -c "airflow db migrate &&
+               airflow api-server &&
+               airflow scheduler &&
+               airflow dag-processor &&
+               airflow triggerer"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - ${NETWORK_NAME}
+
+networks:
+  ${NETWORK_NAME}:
+    driver: bridge

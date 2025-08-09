@@ -21,11 +21,19 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+
+# Environment variables
+.env
+
+# Database files
 Mysql/DataBase/*
 PostgreSQL/DataBase/*
 MSSQL/DataBase/*
 MSSQL/Logs/*
 MongoDb/DataBase/*
+Oracle/DataBase/*
+
+# System files
 MSSQL/.DS_Store
 Oracle/.DS_Store
 Oracle/DataBase/.DS_Store
