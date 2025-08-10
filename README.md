@@ -49,6 +49,7 @@ This repository provides a local infrastructure sandbox for development:
 ## Repository Layout
 Top-level directories (case-sensitive as in repo):
 - AirFLow/: Airflow Dockerfile, compose, dags, logs, plugins, config
+  - Note: Path is 'AirFLow' (capital F and L). Compose mounts have been corrected to match this casing for Linux/Windows.
 - PostgreSQL/, MongoDb/, Redis/, kafka/, Sonar/: docker-compose + data/volumes
 - Ftp/, Mysql/, MSSQL/, Oracle/: optional services (compose/config)
 - scripts/: helper scripts (manage-services.sh, validate-config.sh)
@@ -61,7 +62,8 @@ Data volumes live under each service, for example:
 
 ## Prerequisites
 - Docker and Docker Compose installed
-- macOS/Linux shell (Bash)
+- macOS/Linux: Bash shell
+- Windows 10/11: PowerShell 7+ (pwsh) with Docker Desktop (WSL2 backend recommended)
 
 
 ## Quick Start
@@ -78,13 +80,19 @@ Important variables:
 - Optional: GESTOR_PESSOAL_PATH (mounted into Airflow PYTHONPATH)
 
 2) Validate configuration (recommended)
+- macOS/Linux:
 ```
 bash scripts/validate-config.sh
+```
+- Windows (PowerShell):
+```
+pwsh scripts/validate-config.ps1
 ```
 This checks required env vars, ensures compose files and volume folders exist, and warns if Sonar network differs.
 
 3) Start services
 Option A: Helper script (recommended)
+- macOS/Linux:
 ```
 # Show help
 bash scripts/manage-services.sh help
@@ -95,6 +103,18 @@ bash scripts/manage-services.sh start all
 # Start a single service (examples)
 bash scripts/manage-services.sh start postgres
 bash scripts/manage-services.sh start airflow
+```
+- Windows (PowerShell):
+```
+# Show help
+pwsh scripts/manage-services.ps1 help
+
+# Start all services
+pwsh scripts/manage-services.ps1 start all
+
+# Start a single service (examples)
+pwsh scripts/manage-services.ps1 start postgres
+pwsh scripts/manage-services.ps1 start airflow
 ```
 Option B: Docker Compose directly
 ```
@@ -167,9 +187,11 @@ bash scripts/manage-services.sh backup
 ## Environment Variables
 Key variables to review in .env:
 - WORKSPACE_PATH: absolute path to this repository
+  - Windows: use a path like C:/Users/you/Sites/development-setting (forward slashes recommended for Docker)
 - NETWORK_NAME: shared Docker network (e.g., local-services-network)
 - AIRFLOW_PORT, POSTGRES_PORT, PGADMIN_PORT, MONGO_EXPRESS_PORT, KAFKA_PORT, KAFDROP_PORT, KAFKA_UI_PORT, REDIS_INSIGHT_PORT
 - AIRFLOW_DB_CONNECTION (Airflow connection string)
+  - By default points to postgresql+psycopg2://...@host.docker.internal:${POSTGRES_PORT}/airflow (works on Docker Desktop for Windows/macOS and modern Docker on Linux)
 - POSTGRES_USER, POSTGRES_PASSWORD, PGADMIN_EMAIL, PGADMIN_PASSWORD
 - Add or adjust others as you enable more services
 

@@ -16,10 +16,10 @@ services:
       AIRFLOW__CORE__LOAD_EXAMPLES: "False"
       PYTHONPATH: /app
     volumes:
-      - ${WORKSPACE_PATH}/AirFlow/dags:/opt/airflow/dags
-      - ${WORKSPACE_PATH}/AirFlow/logs:/opt/airflow/logs
-      - ${WORKSPACE_PATH}/AirFlow/plugins:/opt/airflow/plugins
-      - ${WORKSPACE_PATH}/AirFlow/config:/opt/airflow/config
+      - ${WORKSPACE_PATH}/AirFLow/dags:/opt/airflow/dags
+      - ${WORKSPACE_PATH}/AirFLow/logs:/opt/airflow/logs
+      - ${WORKSPACE_PATH}/AirFLow/plugins:/opt/airflow/plugins
+      - ${WORKSPACE_PATH}/AirFLow/config:/opt/airflow/config
       - ${GESTOR_PESSOAL_PATH}/:/app
     ports:
       - "${AIRFLOW_PORT}:8080"
